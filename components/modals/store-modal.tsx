@@ -10,6 +10,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
+import axios from 'axios';
 
 const formSchema = z.object({
     name: z.string().min(1)
@@ -29,13 +30,23 @@ export const StoreModal = () => {
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         //TODO: Criar seção
-        console.log(values);
+        try {
+            setLoading(true);
+
+            const response = await axios.post('/api/stores', values);
+            console.log(response.data)
+        } catch (error) {
+            console.log(error);
+        } finally{
+            setLoading(false);
+        }
     }
 
     const storeModal = useStoreModal();
 
     return (
-        <Modal title="Crie uma seção" description="Crie uma nova seção para gerenciar novos produtos e categorias"      isOpen={storeModal.isOpen} onClose={storeModal.onClose}>
+        <Modal title="Crie uma seção" description="Crie uma nova seção para gerenciar novos produtos e categorias" 
+        isOpen={storeModal.isOpen} onClose={storeModal.onClose}>
             <div>
                 <div className='space-y-4 pb-4 py-2'>
                     <Form {...form}>
