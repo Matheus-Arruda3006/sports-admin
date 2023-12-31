@@ -18,10 +18,5 @@ export default function Home() {
     },[isOpen, onOpen]);
 
 
-    return (
-      <div className="p-4">
-         <UserButton/>
-         Root page
-      </div>
-    )
+    return null;
   }
